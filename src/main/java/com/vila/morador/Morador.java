@@ -9,25 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.vila.pet.Pet;
-
-/* Observações da API
- O campo Unidade será uma referência a uma entidade separada, armazenando apenas o
-vínculo entre a Unidade e o Morador.
- Os campos Veículos e Animais de Estimação também serão armazenados em entidades
-separadas, levando em consideração que cada morador pode ter mais de um Animal de
-Estimação e/ou mais de um veículo.
- A Aplicação precisará de Endpoints e regras responsáveis por Listar todos os moradores,
-buscar um único morador, inserir, atualizar e excluir moradores */
-
-
-
-
-
-
+import com.vila.unidade.Unidade;
+import com.vila.veiculo.Veiculo;
 
 @Entity
 @Table
@@ -44,19 +32,18 @@ public class Morador {
 	private Integer telefone;
 	private String email;
 
-	
-	/*@OneToMany(cascade = CascadeType.ALL)// cascade está salvando o morador com o pet, se não colocar não salva pois o default é null // (mappedBy = "morador")
-	@JoinColumn(name = "moradorId", referencedColumnName = "id")
-	*/
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "moradorId", referencedColumnName = "id")
 	private List<Pet> pet;
 	
-	// private Unidade unidade;
-	// private Integer veiculos;
-	// private String observacao;
-	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "moradorId", referencedColumnName = "id")
+	private List<Veiculo> veiculo;
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "UnidadeId", referencedColumnName = "id")
+	private Unidade unidade;
+	
 	public Morador() {
 		super();
 	}
@@ -114,6 +101,22 @@ public class Morador {
 
 	public void setPet(List<Pet> pet) {
 		this.pet = pet;
+	}
+
+	public List<Veiculo> getVeiculo() {
+		return veiculo;
+	}
+
+	public void setVeiculo(List<Veiculo> veiculo) {
+		this.veiculo = veiculo;
+	}
+
+	public Unidade getUnidade() {
+		return unidade;
+	}
+
+	public void setUnidade(Unidade unidade) {
+		this.unidade = unidade;
 	}
 	
 	

@@ -21,7 +21,6 @@ public class Veiculo {
 	private String modelo;
 	private String ano;
 	
-	
 	public Integer getId() {
 		return id;
 	}
@@ -52,7 +51,5 @@ public class Veiculo {
 	public void setAno(String ano) {
 		this.ano = ano;
 	}
-	
-	
 	
 }
